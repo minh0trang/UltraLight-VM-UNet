@@ -112,11 +112,15 @@ python test.py
 ## Citation
 If you find this repository helpful, please consider citing: </br>
 ```
-@article{wu2025ultralight,
-  title={UltraLight VM-UNet: Parallel Vision Mamba Significantly Reduces Parameters for Skin Lesion Segmentation},
-  author={Wu, Renkai and Liu, Yinghao and Ning, Guochen and Liang, Pengchen and Chang, Qing},
-  journal={Patterns},
-  year={2025}
+@article{WU2025101298,
+title = {UltraLight VM-UNet: Parallel Vision Mamba significantly reduces parameters for skin lesion segmentation},
+journal = {Patterns},
+pages = {101298},
+year = {2025},
+issn = {2666-3899},
+doi = {https://doi.org/10.1016/j.patter.2025.101298},
+url = {https://www.sciencedirect.com/science/article/pii/S2666389925001461},
+author = {Renkai Wu and Yinghao Liu and Guochen Ning and Pengchen Liang and Qing Chang},
 }
 ```
 
