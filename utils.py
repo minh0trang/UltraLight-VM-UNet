@@ -274,8 +274,9 @@ class DiceLoss(nn.Module):
         smooth = 1
         size = pred.size(0)
 
-        pred_ = pred.view(size, -1)
-        target_ = target.view(size, -1)
+        # Ép giá trị pred và target vào khoảng [0, 1]
+        pred = torch.clamp(pred, 0, 1)
+        target = torch.clamp(target, 0, 1)
         intersection = pred_ * target_
         dice_score = (2 * intersection.sum(1) + smooth)/(pred_.sum(1) + target_.sum(1) + smooth)
         dice_loss = 1 - dice_score.sum()/size
