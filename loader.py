@@ -17,10 +17,14 @@ def dataset_normalized(imgs):
     imgs_normalized = np.empty(imgs.shape)
     imgs_std = np.std(imgs)
     imgs_mean = np.mean(imgs)
-    imgs_normalized = (imgs-imgs_mean)/imgs_std
-    for i in range(imgs.shape[0]):
-        imgs_normalized[i] = ((imgs_normalized[i] - np.min(imgs_normalized[i])) / (np.max(imgs_normalized[i])-np.min(imgs_normalized[i])))*255
-    return imgs_normalized
+    imgs_normalized = (imgs - imgs_mean) / (imgs_std + 1e-8)  # Add eps to avoid division by zero
+    
+    # Normalize to [0, 1] range
+    imgs_min = np.min(imgs_normalized)
+    imgs_max = np.max(imgs_normalized)
+    imgs_normalized = (imgs_normalized - imgs_min) / (imgs_max - imgs_min + 1e-8)
+    
+    return imgs_normalized  # ← Return in [0, 1], not multiply by 255!
 
 
 ## Temporary
