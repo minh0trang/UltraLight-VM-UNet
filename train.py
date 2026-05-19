@@ -4,7 +4,7 @@ from torch.cuda.amp import autocast, GradScaler
 from torch.utils.data import DataLoader
 from loader import *
 
-from models.UltraLight_VM_UNet import UltraLight_VM_UNet
+#from models.UltraLight_VM_UNet import UltraLight_VM_UNet
 from engine import *
 import os
 import sys
@@ -12,7 +12,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0" # "0, 1, 2, 3"
 
 from utils import *
 from configs.config_setting import setting_config
-
+import segmentation_models_pytorch as smp
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -74,15 +74,15 @@ def main(config):
 
 
     print('#----------Prepareing Models----------#')
-    model_cfg = config.model_config
-    model = UltraLight_VM_UNet(num_classes=model_cfg['num_classes'], 
-                               input_channels=model_cfg['input_channels'], 
-                               c_list=model_cfg['c_list'], 
-                               split_att=model_cfg['split_att'], 
-                               bridge=model_cfg['bridge'],)
-    
+    model_cfg = config.model_config 
+    # Thay thế bằng U-Net chuẩn của thư viện SMP
+    model = smp.Unet(
+        encoder_name="resnet34",                             # Dùng backbone ResNet34 chuẩn học thuật
+        encoder_weights="imagenet",                          # Tải trọng số pre-trained để hội tụ nhanh
+        in_channels=model_cfg['input_channels'],             # Khớp với cấu hình (thường là 3)
+        classes=model_cfg['num_classes']                     # Khớp với số lớp đầu ra (thường là 1)
+    )
     model = torch.nn.DataParallel(model.cuda(), device_ids=gpu_ids, output_device=gpu_ids[0])
-
 
 
 
