@@ -80,7 +80,7 @@ def main(config):
         encoder_name="resnet34",                             # Dùng backbone ResNet34 chuẩn học thuật
         encoder_weights="imagenet",                          # Tải trọng số pre-trained để hội tụ nhanh
         in_channels=model_cfg['input_channels'],             # Khớp với cấu hình (thường là 3)
-        classes=model_cfg['num_classes']   
+        classes=model_cfg['num_classes'], 
         activation='sigmoid'                  # Khớp với số lớp đầu ra (thường là 1)
     )
     model = torch.nn.DataParallel(model.cuda(), device_ids=gpu_ids, output_device=gpu_ids[0])
